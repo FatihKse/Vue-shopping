@@ -11,15 +11,13 @@
                     </v-card-title>
                     <v-card-text>
                         <div class="favories-and-buy d-flex justify-space-between">
-                            <div class="toggle-button-cover" @click="likeItem(item)">
-                                <div class="button-cover">
-                                    <div class="button r" id="button-1">
-                                        <input type="checkbox" class="checkbox" />
-                                        <div class="knobs"></div>
-                                        <div class="layer"></div>
-                                    </div>
-                                </div>
+                            <div>
+                                <button @click="likeItem(item)">
+                                    <i v-if="item.isLiked === true" class="fa-solid fa-heart fonts reds"></i>
+                                    <i v-else class="fa-regular fa-heart text-red fonts"></i>
+                                </button>
                             </div>
+
                             <button @click="addProduct(item)" class="addBasket">
                                 <span class="">Sepete Ekle</span>
 
@@ -64,6 +62,7 @@ export default {
             loading: false,
             selection: 1,
             shopingList: [],
+            colors: false,
         }
     },
     created() {
@@ -75,14 +74,34 @@ export default {
     },
     methods: {
         likeItem(item) {
+            console.log(item);
             this.$store.dispatch("likeProd", item)
+
         },
         addProduct(item) {
             this.$store.dispatch("addBasket", item)
         },
     },
+    computed: {
+        setActive() {
+            return {
+                btnColor: this.colors
+            }
+
+        }
+    }
 }
 </script>
+
+<style>
+.btnColor {
+    background-color: red;
+}
+
+.btnDot {
+    background-color: green;
+}
+</style>
 
 
 

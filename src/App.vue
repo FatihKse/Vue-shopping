@@ -9,8 +9,8 @@
         </v-col>
         <v-col cols="5" class="text-right">
           <router-link to="/favories" class="nav-link me-5" active-class="active">
-            Favories
-            <span v-if="_likeitems.length > 0">
+            <i class="fa-solid fa-heart nav-like"></i>
+            <span class="favCount" v-if="_likeitems.length > 0">
               {{ _likeitems.length }}
             </span>
           </router-link>
@@ -32,8 +32,8 @@
 <script>
 import { mapGetters } from 'vuex';
 export default {
-  computed: {
 
+  computed: {
     ...mapGetters({
       _likeitems: "_likeitems",
       _deleteLike: "deleteLike",

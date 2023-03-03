@@ -10,8 +10,20 @@ const store = createStore({
   mutations: {
     likeProd(state, item) {
       if (!state.likes.includes(item)) {
+        if (item.hasOwnProperty.call(item, "isLiked")) {
+          item["isLiked"] = true;
+        } else {
+          let property = { isLiked: true };
+          Object.assign(item, property);
+        }
         state.likes.push(item);
       } else {
+        if (item.hasOwnProperty.call(item, "isLiked")) {
+          item["isLiked"] = false;
+        } else {
+          let property = { isLiked: false };
+          Object.assign(item, property);
+        }
         state.likes = state.likes.filter((i) => i.id !== item.id);
       }
     },
@@ -35,9 +47,6 @@ const store = createStore({
     deleteLik(state, item) {
       state.likes = state.likes.filter((i) => i.id !== item.id);
     },
-    // dissLikeItem(state, disLike) {
-    //   state.likes = state.likes.filter((i) => i.id !== disLike.id);
-    // },
   },
 
   actions: {
@@ -54,14 +63,10 @@ const store = createStore({
     deleteLike({ commit }, product) {
       commit("deleteLik", product);
     },
-    // dissLikeItem({ commit }, disLike) {
-    //   commit("dissLikeItem", disLike);
-    // },
   },
   getters: {
     _likeitems: (state) => state.likes,
     _deleteLike: (state) => state.likes,
-    // _dissLikeItem: (state) => state.likes,
     _addBasket: (state) => state.basket,
     _addToBasket: (state) => state.basket,
     totalCart: (state) => {

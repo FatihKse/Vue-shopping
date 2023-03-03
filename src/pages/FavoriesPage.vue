@@ -1,36 +1,40 @@
 <template>
-    <div class="top-start">
-        <h1> Favories Page</h1>
-        <div class="d-flex-card">
-            <div v-for="liked in _likeitems" :key="liked" :loading="loading" class="card-out me-7 my-5">
-                <v-img class="card-photo" :src="liked.photo"></v-img>
-                <v-card-item>
-                    <v-card-title class="font-weight-bold">{{ liked.name }}</v-card-title>
-                </v-card-item>
-                <v-card-text>
-                    <div class="my-4 text-subtitle-1 ">
-                        <p class="text-green"> {{ liked.price }} $</p>
-                    </div>
-                    <div>{{ liked.color }}</div>
-                    <div class="basket-box d-flex">
+    <v-container>
+        <v-row v-if="_likeitems.length > 0">
+            <v-col cols="12" sm="6" md="3" xl="3" v-for="liked in _likeitems" :key="liked" :loading="loading">
+                <v-card>
+                    <v-img class="card-photo" :src="liked.photo"></v-img>
+                    <v-card-title class="d-flex justify-space-around">
+                        <span class="text-left text-orange">{{ liked.name }}</span>
+                        <span class="text-green text-right"> {{ liked.price }} $</span>
+                    </v-card-title>
 
-                        <button @click="deleteLike(liked)" class="doneBtn">
-                            <span class="">Çıkart</span>
+                    <v-card-text>
 
-                        </button>
+                        <div class="text-center my-5 text-orange">{{ liked.color }}</div>
+                        <div class="basket-box d-flex">
 
-                        <button @click="addToBtn(liked)" class="basketBtn">
-                            <span class="">Sepete Ekle</span>
-                        </button>
+                            <button @click="deleteLike(liked)" class="doneBtn">
+                                <span class="">Çıkart</span>
+                            </button>
 
-
-                    </div>
-                </v-card-text>
-            </div>
-
-        </div>
-
-    </div>
+                            <button @click="addToBtn(liked)" class="basketBtn">
+                                <span class="">Sepete Ekle</span>
+                            </button>
+                        </div>
+                    </v-card-text>
+                </v-card>
+            </v-col>
+        </v-row>
+        <v-col v-else cols="12" class="bos-sepet d-flex justify-center">
+            <v-col cols="12" sm="6" md="4" lg="4" class="text-center">
+                <v-alert type="warning" text="Favorilerinizde Ürün Bulunmamaktadır">
+                    <br>
+                    <router-link to="/" class="text-decoration-none text-white font-weight-bold">AnaSayfa</router-link>
+                </v-alert>
+            </v-col>
+        </v-col>
+    </v-container>
 </template>
 
 <script>
@@ -44,9 +48,7 @@ export default {
         return { store }
 
     },
-    created() {
 
-    },
     methods: {
         deleteLike(product) {
             this.$store.dispatch("deleteLike", product)
