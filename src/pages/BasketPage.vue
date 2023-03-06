@@ -1,7 +1,7 @@
 <template>
     <v-container>
         <v-row no-gutters v-if="products.length > 0">
-            <v-col cols="12" sm="12" md="12" lg="8" class="bask-left">
+            <v-col cols="12" sm="12" md="12" lg="7" class="bask-left">
                 <v-table density="compact">
                     <thead>
                         <tr class="table-row">
@@ -48,7 +48,7 @@
                     </tbody>
                 </v-table>
             </v-col>
-            <v-col cols="12" sm="12" md="12" lg="4" class="bask-right">
+            <v-col cols="12" sm="12" md="12" lg="5" class="bask-right">
                 <div class="bask-total-area">
                     <img src="..//assets/purchase.png" alt="">
                     <ul>
@@ -75,12 +75,19 @@
                         </li>
 
                     </ul>
+                    <p class="totals-product">
+                        Toplam Ürün :
+                        <span class="text-orange">
+                            {{ cartQuant }}
+                        </span>
+                    </p>
                     <p class="totals-cash">
                         Toplam Tutar :
                         <span class="money">
                             {{ cartTotal }} $
                         </span>
                     </p>
+
                 </div>
             </v-col>
         </v-row>
@@ -106,8 +113,6 @@ export default {
     data() {
         return {
             products: [],
-
-
         }
     },
     created() {
@@ -137,6 +142,9 @@ export default {
     computed: {
         cartTotal() {
             return this.$store.getters.totalCart
+        },
+        cartQuant() {
+            return this.$store.getters.totalQuntity
         },
         ...mapGetters({
             _addBasket: "_addBasket",

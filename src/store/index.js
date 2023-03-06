@@ -72,6 +72,9 @@ const store = createStore({
     totalCart: (state) => {
       return state.basket.reduce((a, b) => a + b.price * b.quantity, 0);
     },
+    totalQuntity: (state) => {
+      return state.basket.reduce((a, b) => a + b.quantity, 0);
+    },
   },
 });
 

@@ -4,11 +4,14 @@
         <v-row v-if="shopingList.length > 0">
             <v-col cols="12" sm="6" md="4" lg="" xl="3" v-for="item in shopingList" :key="item" :loading="loading">
                 <v-card>
-                    <v-img class="card-photo" :src="item.photo"></v-img>
-                    <v-card-title class="d-flex justify-space-around">
-                        <span class="text-left text-orange">{{ item.name }}</span>
-                        <span class="text-green text-right"> {{ item.price }} $</span>
-                    </v-card-title>
+                    <router-link :to="{ path: '/product/' + item.id }">
+                        <v-img class="card-photo" :src="item.photo"></v-img>
+                        <v-card-title class="d-flex justify-space-around">
+                            <span class="text-left text-orange">{{ item.name }}</span>
+                            <span class="text-green text-right"> {{ item.price }} $</span>
+                        </v-card-title>
+                    </router-link>
+
                     <v-card-text>
                         <div class="favories-and-buy d-flex justify-space-between">
                             <div>
@@ -56,7 +59,9 @@
 </template>
 
 <script>
+
 export default {
+
     data() {
         return {
             loading: false,
@@ -70,22 +75,23 @@ export default {
             this.$appAxios.get("/shoes").then(shoes_come => {
                 this.shopingList = shoes_come.data
             })
-        }, 2000);
+        }, 1000);
     },
     methods: {
         likeItem(item) {
             console.log(item);
             this.$store.dispatch("likeProd", item)
-
         },
         addProduct(item) {
             this.$store.dispatch("addBasket", item)
+            this.$toast.success(`Sepete Eklendi`);
         },
     },
     computed: {
         setActive() {
             return {
                 btnColor: this.colors
+
             }
 
         }
